@@ -1,33 +1,32 @@
 package com.example.JPARestAPI.Entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
-@Getter
-@Table(name = "user_auth")
-@NoArgsConstructor
+@Data
+@RequiredArgsConstructor
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, unique = true)
+    private long seq;
     private String username;
-
-    @Column(nullable = false)
     private String password;
+    private String roles; // USER, ADMIN
 
-    @Column(name = "auth")
-    @Enumerated(value = EnumType.STRING)
-    private UserAuthEnum auth;
-
-    public User(String username, String password, UserAuthEnum role) {
-        this.username = username;
-        this.password = password;
-        this.auth = role;
+    public List<String> getRoleList(){
+        if(this.roles.length() > 0) {
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
     }
 }
