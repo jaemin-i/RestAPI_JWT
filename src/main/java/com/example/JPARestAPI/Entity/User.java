@@ -1,9 +1,6 @@
 package com.example.JPARestAPI.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +16,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long seq;
+
+    @Column(unique = true)
     private String username;
+
     private String password;
     private String roles; // USER, ADMIN
 

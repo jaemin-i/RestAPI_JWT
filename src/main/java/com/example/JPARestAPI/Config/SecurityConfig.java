@@ -61,7 +61,7 @@ public class SecurityConfig {
         // 3. cors 정책
         http.addFilter(corsFilter);
 
-        // 4.  로그인 페이지와 http 페이지를 안쓸꺼야.
+        // 4.  로그인 페이지와 http 페이지를 안씀
         http.formLogin(AbstractHttpConfigurer::disable);
         http.httpBasic(AbstractHttpConfigurer::disable);
 

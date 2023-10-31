@@ -1,5 +1,6 @@
 package com.example.JPARestAPI.Service;
 
+import com.example.JPARestAPI.DTO.ResponseUserDTO;
 import com.example.JPARestAPI.Entity.User;
 import com.example.JPARestAPI.Jwt.JwtUtil;
 import com.example.JPARestAPI.Repository.UserRepository;
@@ -8,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -47,4 +51,17 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public List<ResponseUserDTO> info(User user) {
+        List<ResponseUserDTO> responseUsers = new ArrayList<>();
+        if(user.getRoles().equals("ROLE_ADMIN")){
+            List<User> adminInfo = userRepository.findAll();
+            for(User tempUser : adminInfo){
+                responseUsers.add(new ResponseUserDTO(tempUser));
+            }
+            return responseUsers;
+        }
+        User tempUser = userRepository.findByUsername(user.getUsername());
+        responseUsers.add(new ResponseUserDTO(tempUser));
+        return responseUsers;
+    }
 }
